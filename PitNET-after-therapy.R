@@ -40,11 +40,14 @@ sampleDistMatrix <- as.matrix( sampleDists )
 rownames(sampleDistMatrix) <- paste( vsd$Therapy, vsd$Samples, sep = ' - ')
 colnames(sampleDistMatrix) <- NULL
 colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+
+###  Supplementary figure 4.
 pheatmap(sampleDistMatrix,
          clustering_distance_rows = sampleDists,
          clustering_distance_cols = sampleDists,
          col = colors)
 
+###  Supplementary figure 2.
 mds <- as.data.frame(colData(vsd))  %>%
   cbind(cmdscale(sampleDistMatrix))
 ggplot(mds, aes(x = `1`, y = `2`, color = Samples)) +
@@ -52,6 +55,7 @@ ggplot(mds, aes(x = `1`, y = `2`, color = Samples)) +
   theme_grey(base_size = 17) +
   labs(x = 'MDS component 1', y = 'MDS component 2')
 
+###  Supplementary figure 3.
 plotPCA(vsd, intgroup = c("Therapy"))
 theme_grey(base_size = 17)
 plotPCA(vsd, intgroup = c("Samples"))
@@ -135,7 +139,7 @@ res1OrderedSignif2$Symbol = mapIds(org.Hs.eg.db,
 
 
 ###  Draw p-value histogram
-hist(lfc_shrink$pvalue, col = "lavender", main = "Terapija: Ir vs Nav", xlab = "p-values")
+hist(lfc_shrink$pvalue, col = "lavender", main = "Terapija: Yes vs No", xlab = "p-values")
 
 
 ###  Perform GSEA analysis using the fgsea package and MSigDB Hallmark gene sets
@@ -177,6 +181,7 @@ gseaKEGG_results = as.data.frame(gseaKEGG_results)
 
 
 ###  Create volcano plot of the relationship between logFoldChange and p-value
+###  Figure 1.(B)
 EnhancedVolcano(lfc_shrink,
                 lab = lfc_shrink$Symbol,
                 x = 'log2FoldChange',
@@ -195,6 +200,7 @@ EnhancedVolcano(lfc_shrink,
 
 
 ###  Create a heatmap to cluster samples and DEG`s by their expression similiarity.
+###  Figure 1.(A)
 draw_colnames_45 <- function (coln, gaps, ...) {
   coord = pheatmap:::find_coordinates(length(coln), gaps)
   x = coord$coord - 0.5 * coord$size
@@ -302,6 +308,7 @@ plot_mod_diff(ddsMat, ddssva)
 
 
 ###  Create black and white boxplots for the seven most differentially 
+###  Figure 2.
 expressed genes based on their L2FC values
 
 list_of_genes = c('ENSG00000183742', 'ENSG00000083307', 'ENSG00000181143', 'ENSG00000181234', 'ENSG00000154997', 'ENSG00000186732', 'ENSG00000105088')
