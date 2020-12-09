@@ -227,6 +227,7 @@ pheatmap(mat, annotation_col = anno, fontsize = 10,
 
 
 ###  Draw boxplots for raw read count distribution for significant DEG`s
+###  Supplementary table 2.
 plot_sva_boxplots  = function (dati) {
   m <- estimateSizeFactors(dati)
   sva_counts = as.data.frame(counts(m, normalized=TRUE))
@@ -271,6 +272,7 @@ plot_sva_boxplots(ddsMat1)
 
 
 ###  Draw SVA weighted/unweighted model comparison barplots for significant DEG`s
+###  Supplementary table 2.
 plot_mod_diff = function (no, yes) {
   m1 = estimateSizeFactors(no)
   m2 = estimateSizeFactors(yes)
